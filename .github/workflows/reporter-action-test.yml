@@ -1,7 +1,7 @@
 name: reporter-action-test
 
 on:
-  push:
+  pull_request:
 
 jobs:
   reporter-test:

@@ -9,11 +9,7 @@
       - '**.md'
       - '.github/workflows/codeql.yml'
       - './docs/**'
-    push:
-      paths-ignore:
-      - '**.md'
-      - './docs/**'
-    workflow_dispatch:
+
 
   jobs:
     validation:
