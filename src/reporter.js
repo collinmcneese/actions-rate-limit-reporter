@@ -6,7 +6,10 @@ const core = require('@actions/core');
 // Fetch rate limit data from the GitHub API
 async function fetchRateLimit() {
   try {
-    let response = await github.rest.rateLimit.get();
+    const myToken = process.env['GITHUB_TOKEN'];
+    const octokit = github.getOctokit(myToken);
+
+    let response = await octokit.rest.rateLimit.get();
     console.log(`Rate limit data fetched. \n ${response.data}`);
     return response.data;
   } catch (error) {
