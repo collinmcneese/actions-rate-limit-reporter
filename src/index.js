@@ -1,6 +1,7 @@
 // index.js
 
 const core = require('@actions/core');
+console.log('loading resources from reporter.js');
 const { reporter } = require('./reporter');
 
 // Parse inputs
@@ -10,6 +11,6 @@ const render = core.getInput('render');
 reporter({
   render: render,
 }).then((result) => {
-  console.log(result);
+  console.log(`reporter result: ${result}`);
   core.setOutput('rateLimitObject', result);
 });

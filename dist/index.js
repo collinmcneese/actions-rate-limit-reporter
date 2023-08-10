@@ -9884,6 +9884,7 @@ var __webpack_exports__ = {};
 // index.js
 
 const core = __nccwpck_require__(2186);
+console.log('loading resources from reporter.js');
 const { reporter } = __nccwpck_require__(3719);
 
 // Parse inputs
@@ -9893,7 +9894,7 @@ const render = core.getInput('render');
 reporter({
   render: render,
 }).then((result) => {
-  console.log(result);
+  console.log(`reporter result: ${result}`);
   core.setOutput('rateLimitObject', result);
 });
 
