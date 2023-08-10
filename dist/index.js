@@ -9654,7 +9654,7 @@ async function fetchRateLimit() {
 
 // Render the rate limit data as a Markdown table
 async function renderRateLimitTable(rateLimitObject) {
-  // console.log(rateLimitObject)
+  console.log(rateLimitObject);
 
   // Build the table header data
   let table = '| Resource | Limit | Remaining | Reset |\n';
