@@ -1,0 +1,41 @@
+---
+  name: ci
+
+  on:
+    pull_request:
+      branches:
+      - main
+      paths-ignore:
+      - '**.md'
+      - '.github/workflows/codeql.yml'
+      - './docs/**'
+    push:
+      paths-ignore:
+      - '**.md'
+      - './docs/**'
+    workflow_dispatch:
+
+  jobs:
+    validation:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [16.x, 18.x]
+      steps:
+        - uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: Install Dependencies
+          run: npm ci
+        - name: npm test
+          run: npm test
+        - name: Verify dist is up to date
+          run: |
+            if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+              echo "Detected uncommitted changes after build.  See status below:"
+              git diff
+              exit 1
+            fi
+          id: diff

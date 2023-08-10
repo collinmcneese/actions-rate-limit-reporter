@@ -1,0 +1,14 @@
+name: GitHub Actions Rate-Limit Reporter
+description: GitHub Action used to report on current rate-limit data as part of an Actions workflow
+author: 'Collin McNeese'
+branding:
+  icon: 'bar-chart'
+  color: 'blue'
+inputs:
+  render:
+    description: 'Optional. Whether or not to render the data as a table. Defaults to true.'
+    default: "true"
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
