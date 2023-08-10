@@ -9664,7 +9664,11 @@ async function renderRateLimitTable(rateLimitObject) {
 
   // Create a row for each resource
   for (let resource in rateLimitObject.resources) {
-    table += `| ${resource} | ${rateLimitObject.resources[resource].limit} | ${rateLimitObject.resources[resource].remaining} | ${rateLimitObject.resources[resource].reset} |\n`;
+    let rowLimit = rateLimitObject.resources[resource].limit;
+    let rowRemaining = rateLimitObject.resources[resource].remaining;
+    let rowReset = Date(rateLimitObject.resources[resource].reset);
+
+    table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
   }
 
   return table;
