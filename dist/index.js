@@ -9645,8 +9645,8 @@ const core = __nccwpck_require__(2186);
 // Fetch rate limit data from the GitHub API
 async function fetchRateLimit() {
   try {
-    const myToken = process.env['GITHUB_TOKEN'];
-    const octokit = github.getOctokit(myToken);
+    const accessToken = core.getInput('access-token');
+    const octokit = github.getOctokit(accessToken);
 
     let response = await octokit.rest.rateLimit.get();
     console.log(`Rate limit data fetched. \n ${response.data}`);

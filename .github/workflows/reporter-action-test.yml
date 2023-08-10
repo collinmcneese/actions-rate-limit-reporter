@@ -9,3 +9,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
