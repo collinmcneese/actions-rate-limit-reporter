@@ -9649,7 +9649,7 @@ async function fetchRateLimit() {
     const octokit = github.getOctokit(accessToken);
 
     let response = await octokit.rest.rateLimit.get();
-    console.log(`Rate limit data fetched. \n ${response.data}`);
+
     return response.data;
   } catch (error) {
     core.setFailed(error.message);
@@ -9658,8 +9658,6 @@ async function fetchRateLimit() {
 
 // Render the rate limit data as a Markdown table
 async function renderRateLimitTable(rateLimitObject) {
-  console.log(rateLimitObject);
-
   // Build the table header data
   let table = '| Resource | Limit | Remaining | Reset |\n';
   table += '| --- | --- | --- | --- |\n';
@@ -9897,7 +9895,7 @@ const render = core.getInput('render');
 reporter({
   render: render,
 }).then((result) => {
-  console.log(`reporter result: ${result}`);
+  console.log(`reporter result:\n${result}`);
   core.setOutput('rateLimitObject', result);
 });
 

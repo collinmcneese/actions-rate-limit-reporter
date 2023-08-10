@@ -11,6 +11,6 @@ const render = core.getInput('render');
 reporter({
   render: render,
 }).then((result) => {
-  console.log(`reporter result: ${result}`);
+  console.log(`reporter result:\n${result}`);
   core.setOutput('rateLimitObject', result);
 });

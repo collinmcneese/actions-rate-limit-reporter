@@ -10,7 +10,7 @@ async function fetchRateLimit() {
     const octokit = github.getOctokit(accessToken);
 
     let response = await octokit.rest.rateLimit.get();
-    console.log(`Rate limit data fetched. \n ${response.data}`);
+
     return response.data;
   } catch (error) {
     core.setFailed(error.message);
@@ -19,8 +19,6 @@ async function fetchRateLimit() {
 
 // Render the rate limit data as a Markdown table
 async function renderRateLimitTable(rateLimitObject) {
-  console.log(rateLimitObject);
-
   // Build the table header data
   let table = '| Resource | Limit | Remaining | Reset |\n';
   table += '| --- | --- | --- | --- |\n';
