@@ -12,6 +12,9 @@ inputs:
   access-token:
     description: 'The GitHub access token to use for the request.'
     required: true
+outputs:
+  rateLimitObject:
+    description: 'The raw rate-limit object returned from the GitHub API.'
 runs:
   using: 'node16'
   main: 'dist/index.js'

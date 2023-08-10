@@ -9,5 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        id: reporter-test-step
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get the output
+        run: |
+          echo "reporter-output - The output was ${{ steps.reporter-test-step.outputs.reporter-output }}"
+          echo "rateLimitObject - The output was ${{ steps.reporter-test-step.outputs.rateLimitObject }}"
