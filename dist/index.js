@@ -9646,6 +9646,7 @@ const core = __nccwpck_require__(2186);
 async function fetchRateLimit() {
   try {
     let response = await github.rest.rateLimit.get();
+    console.log(`Rate limit data fetched. \n ${response.data}`);
     return response.data;
   } catch (error) {
     core.setFailed(error.message);
