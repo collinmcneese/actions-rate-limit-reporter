@@ -58,9 +58,8 @@ async function renderRateLimitTable({ rateLimitObject }) {
  * @param {string} options.render - Whether to render the rate limit data as a Markdown table
  * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
  */
-async function reporter({ render }) {
+async function reporter({ render, token }) {
   try {
-    let token = core.getInput('access-token');
     let rateLimitObject = await fetchRateLimit({ token });
 
     if (render) {

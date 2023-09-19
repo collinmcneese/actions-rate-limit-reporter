@@ -9694,9 +9694,8 @@ async function renderRateLimitTable({ rateLimitObject }) {
  * @param {string} options.render - Whether to render the rate limit data as a Markdown table
  * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
  */
-async function reporter({ render }) {
+async function reporter({ render, token }) {
   try {
-    let token = core.getInput('access-token');
     let rateLimitObject = await fetchRateLimit({ token });
 
     if (render) {
@@ -9908,13 +9907,13 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const { reporter } = __nccwpck_require__(3719);
 
+let token = core.getInput('access-token');
 let renderInput = core.getInput('render');
+
 let render = renderInput === 'true';
 
 // Run the Reporter action
-reporter({
-  render: render,
-}).then((result) => {
+reporter({ render, token }).then((result) => {
   core.debug(`reporter result:\n${result}`);
   core.setOutput('rateLimitObject', result);
 });
