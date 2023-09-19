@@ -29,7 +29,6 @@ Example with rendering the output as step summary output:
   uses: collinmcneese/actions-rate-limit-reporter@main
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    render: true
 ```
 
 Example using this Action in a step and then using the output in a subsequent step:
