@@ -56,7 +56,7 @@ async function renderRateLimitTable({ rateLimitObject }) {
  * Fetch rate limit data from the GitHub API and optionally render it as a Markdown table
  * @param {Object} options - The options object
  * @param {string} options.render - Whether to render the rate limit data as a Markdown table
- * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
+ * @returns {Promise<Object>} - The rate limit data object
  */
 async function reporter({ render, token }) {
   try {
