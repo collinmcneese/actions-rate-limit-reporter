@@ -558,7 +558,7 @@ class OidcClient {
                 .catch(error => {
                 throw new Error(`Failed to get ID Token. \n 
         Error Code : ${error.statusCode}\n 
-        Error Message: ${error.result.message}`);
+        Error Message: ${error.message}`);
             });
             const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
             if (!id_token) {
@@ -6004,10 +6004,6 @@ function getNodeRequestOptions(request) {
 		agent = agent(parsedURL);
 	}
 
-	if (!headers.has('Connection') && !agent) {
-		headers.set('Connection', 'close');
-	}
-
 	// HTTP-network fetch step 4.2
 	// chunked encoding is handled by Node.js
 
@@ -6427,6 +6423,7 @@ exports.Headers = Headers;
 exports.Request = Request;
 exports.Response = Response;
 exports.FetchError = FetchError;
+exports.AbortError = AbortError;
 
 
 /***/ }),
@@ -9642,7 +9639,10 @@ function wrappy (fn, cb) {
 const github = __nccwpck_require__(5438);
 const core = __nccwpck_require__(2186);
 
-// Fetch rate limit data from the GitHub API
+/**
+ * Fetch rate limit data from the GitHub API
+ * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
+ */
 async function fetchRateLimit() {
   try {
     const accessToken = core.getInput('access-token');
@@ -9656,7 +9656,11 @@ async function fetchRateLimit() {
   }
 }
 
-// Render the rate limit data as a Markdown table
+/**
+ * Render the rate limit data as a Markdown table
+ * @param {Octokit.RateLimitGetResponse} rateLimitObject - The rate limit data
+ * @returns {Promise<string>} - The rate limit data as a Markdown table
+ */
 async function renderRateLimitTable(rateLimitObject) {
   // Build the table header data
   let table = '| Resource | Limit | Remaining | Reset |\n';
@@ -9674,21 +9678,23 @@ async function renderRateLimitTable(rateLimitObject) {
   return table;
 }
 
-// Main reporter function
+/**
+ * Fetch rate limit data from the GitHub API and optionally render it as a Markdown table
+ * @param {Object} options - The options object
+ * @param {string} options.render - Whether to render the rate limit data as a Markdown table
+ * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
+ */
 async function reporter({ render }) {
   try {
-    // Fetch rate limit data from the GitHub API
     let rateLimitObject = await fetchRateLimit();
 
-    // If render is true, render the rate limit data as a Markdown table
-    if (render === 'true') {
+    if (render) {
       let markDown = await renderRateLimitTable(rateLimitObject);
       core.summary
         .addRaw(markDown)
         .write();
     }
 
-    // Return the rate limit data
     return rateLimitObject;
   } catch (error) {
     core.setFailed(error.message);
@@ -9889,17 +9895,16 @@ var __webpack_exports__ = {};
 // index.js
 
 const core = __nccwpck_require__(2186);
-console.log('loading resources from reporter.js');
 const { reporter } = __nccwpck_require__(3719);
 
-// Parse inputs
-const render = core.getInput('render');
+let renderInput = core.getInput('render');
+let render = renderInput === 'true';
 
 // Run the Reporter action
 reporter({
   render: render,
 }).then((result) => {
-  console.log(`reporter result:\n${result}`);
+  core.debug(`reporter result:\n${result}`);
   core.setOutput('rateLimitObject', result);
 });
 

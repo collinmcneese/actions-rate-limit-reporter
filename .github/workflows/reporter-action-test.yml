@@ -15,3 +15,12 @@ jobs:
       - name: Get the output
         run: |
           echo "rateLimitObject - The output was ${{ steps.reporter-test-step.outputs.rateLimitObject }}"
+      - name: Test output for resources object
+        run: |
+          echo "${{ steps.reporter-test-step.outputs.rateLimitObject }}" | jq .resources
+      - name: Test output for nested object core
+        run: |
+          echo "${{ steps.reporter-test-step.outputs.rateLimitObject }}" | jq .resources.core
+      - name: Test output for nested object core.limit
+        run: |
+          echo "${{ steps.reporter-test-step.outputs.rateLimitObject }}" | jq .resources.core.limit
