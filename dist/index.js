@@ -9688,7 +9688,7 @@ async function renderRateLimitTable({ rateLimitObject }) {
  */
 async function reporter({ render }) {
   try {
-    let token = core.getInput('token');
+    let token = core.getInput('access-token');
     let rateLimitObject = await fetchRateLimit({ token });
 
     if (render) {
