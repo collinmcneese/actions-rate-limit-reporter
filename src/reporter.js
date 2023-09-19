@@ -3,7 +3,10 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 
-// Fetch rate limit data from the GitHub API
+/**
+ * Fetch rate limit data from the GitHub API
+ * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
+ */
 async function fetchRateLimit() {
   try {
     const accessToken = core.getInput('access-token');
@@ -17,7 +20,11 @@ async function fetchRateLimit() {
   }
 }
 
-// Render the rate limit data as a Markdown table
+/**
+ * Render the rate limit data as a Markdown table
+ * @param {Octokit.RateLimitGetResponse} rateLimitObject - The rate limit data
+ * @returns {Promise<string>} - The rate limit data as a Markdown table
+ */
 async function renderRateLimitTable(rateLimitObject) {
   // Build the table header data
   let table = '| Resource | Limit | Remaining | Reset |\n';
@@ -35,21 +42,23 @@ async function renderRateLimitTable(rateLimitObject) {
   return table;
 }
 
-// Main reporter function
+/**
+ * Fetch rate limit data from the GitHub API and optionally render it as a Markdown table
+ * @param {Object} options - The options object
+ * @param {string} options.render - Whether to render the rate limit data as a Markdown table
+ * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
+ */
 async function reporter({ render }) {
   try {
-    // Fetch rate limit data from the GitHub API
     let rateLimitObject = await fetchRateLimit();
 
-    // If render is true, render the rate limit data as a Markdown table
-    if (render === 'true') {
+    if (render) {
       let markDown = await renderRateLimitTable(rateLimitObject);
       core.summary
         .addRaw(markDown)
         .write();
     }
 
-    // Return the rate limit data
     return rateLimitObject;
   } catch (error) {
     core.setFailed(error.message);
