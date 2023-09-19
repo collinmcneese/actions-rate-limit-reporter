@@ -9651,6 +9651,8 @@ async function fetchRateLimit({ token }) {
 
     let { data } = await octokit.rest.rateLimit.get();
 
+    core.debug(`Rate limit data: ${JSON.stringify(data)}`);
+
     return data;
   } catch (error) {
     core.setFailed(error.message);
@@ -9664,20 +9666,26 @@ async function fetchRateLimit({ token }) {
  * @returns {Promise<string>} - The rate limit data rendered as a Markdown table
  */
 async function renderRateLimitTable({ rateLimitObject }) {
-  // Build the table header data
-  let table = '| Resource | Limit | Remaining | Reset |\n';
-  table += '| --- | --- | --- | --- |\n';
+  try {
+    // Build the table header data
+    let table = '| Resource | Limit | Remaining | Reset |\n';
+    table += '| --- | --- | --- | --- |\n';
 
-  // Create a row for each resource
-  for (let resource in rateLimitObject.resources) {
-    let rowLimit = rateLimitObject.resources[resource].limit;
-    let rowRemaining = rateLimitObject.resources[resource].remaining;
-    let rowReset = Date(rateLimitObject.resources[resource].reset);
+    // Create a row for each resource
+    for (let resource in rateLimitObject.resources) {
+      let rowLimit = rateLimitObject.resources[resource].limit;
+      let rowRemaining = rateLimitObject.resources[resource].remaining;
+      let rowReset = Date(rateLimitObject.resources[resource].reset);
 
-    table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
+      table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
+    }
+
+    core.debug(`Rate limit table: ${table}`);
+
+    return table;
+  } catch (error) {
+    core.setFailed(error.message);
   }
-
-  return table;
 }
 
 /**
@@ -9692,7 +9700,7 @@ async function reporter({ render }) {
     let rateLimitObject = await fetchRateLimit({ token });
 
     if (render) {
-      let markDown = await renderRateLimitTable(rateLimitObject);
+      let markDown = await renderRateLimitTable({ rateLimitObject });
       core.summary
         .addRaw(markDown)
         .write();
