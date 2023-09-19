@@ -26,7 +26,7 @@ Example with rendering the output as step summary output:
 
 ```yaml
 - name: Report rate-limit
-  uses: ./.github/actions/report-rate-limit
+  uses: collinmcneese/actions-rate-limit-reporter@main
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     render: true
@@ -37,7 +37,7 @@ Example using this Action in a step and then using the output in a subsequent st
 ```yaml
 - name: Report rate-limit
   id: report-rate-limit
-  uses: ./.github/actions/report-rate-limit
+  uses: collinmcneese/actions-rate-limit-reporter@main
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
 - name: Do something with the rate-limit
