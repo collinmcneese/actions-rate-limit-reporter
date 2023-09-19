@@ -23,12 +23,12 @@ describe('renderRateLimitTable', () => {
 
   test('renderRateLimitTable', async () => {
     // Test that the function returns a string
-    expect(typeof await renderRateLimitTable(rateLimitObject)).toBe('string');
+    expect(typeof await renderRateLimitTable({ rateLimitObject })).toBe('string');
     // Test that the function returns a string that includes the core resource
-    expect(await renderRateLimitTable(rateLimitObject)).toMatch(/core/);
+    expect(await renderRateLimitTable({ rateLimitObject })).toMatch(/core/);
     // Test that the function returns a string that includes the search resource
-    expect(await renderRateLimitTable(rateLimitObject)).toMatch(/search/);
+    expect(await renderRateLimitTable({ rateLimitObject })).toMatch(/search/);
     // Test that the function returns a string that has markdown table syntax
-    expect(await renderRateLimitTable(rateLimitObject)).toMatch(/\|/);
+    expect(await renderRateLimitTable({ rateLimitObject })).toMatch(/\|/);
   });
 });

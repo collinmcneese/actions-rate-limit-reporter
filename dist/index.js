@@ -9641,41 +9641,51 @@ const core = __nccwpck_require__(2186);
 
 /**
  * Fetch rate limit data from the GitHub API
- * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
+ * @param {Object} options - The options object
+ * @param {string} options.token - The GitHub API token
+ * @returns {Promise<Object>} - The rate limit data object from the GitHub API
  */
-async function fetchRateLimit() {
+async function fetchRateLimit({ token }) {
   try {
-    const accessToken = core.getInput('access-token');
-    const octokit = github.getOctokit(accessToken);
+    const octokit = github.getOctokit(token);
 
-    let response = await octokit.rest.rateLimit.get();
+    let { data } = await octokit.rest.rateLimit.get();
 
-    return response.data;
+    core.debug(`Rate limit data: ${JSON.stringify(data)}`);
+
+    return data;
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
 /**
- * Render the rate limit data as a Markdown table
- * @param {Octokit.RateLimitGetResponse} rateLimitObject - The rate limit data
- * @returns {Promise<string>} - The rate limit data as a Markdown table
+ * Render rate limit data as a Markdown table
+ * @param {Object} options - The options object
+ * @param {Object} options.rateLimitObject - The rate limit data
+ * @returns {Promise<string>} - The rate limit data rendered as a Markdown table
  */
-async function renderRateLimitTable(rateLimitObject) {
-  // Build the table header data
-  let table = '| Resource | Limit | Remaining | Reset |\n';
-  table += '| --- | --- | --- | --- |\n';
+async function renderRateLimitTable({ rateLimitObject }) {
+  try {
+    // Build the table header data
+    let table = '| Resource | Limit | Remaining | Reset |\n';
+    table += '| --- | --- | --- | --- |\n';
 
-  // Create a row for each resource
-  for (let resource in rateLimitObject.resources) {
-    let rowLimit = rateLimitObject.resources[resource].limit;
-    let rowRemaining = rateLimitObject.resources[resource].remaining;
-    let rowReset = Date(rateLimitObject.resources[resource].reset);
+    // Create a row for each resource
+    for (let resource in rateLimitObject.resources) {
+      let rowLimit = rateLimitObject.resources[resource].limit;
+      let rowRemaining = rateLimitObject.resources[resource].remaining;
+      let rowReset = Date(rateLimitObject.resources[resource].reset);
 
-    table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
+      table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
+    }
+
+    core.debug(`Rate limit table: ${table}`);
+
+    return table;
+  } catch (error) {
+    core.setFailed(error.message);
   }
-
-  return table;
 }
 
 /**
@@ -9684,12 +9694,12 @@ async function renderRateLimitTable(rateLimitObject) {
  * @param {string} options.render - Whether to render the rate limit data as a Markdown table
  * @returns {Promise<Octokit.RateLimitGetResponse>} - The rate limit data
  */
-async function reporter({ render }) {
+async function reporter({ render, token }) {
   try {
-    let rateLimitObject = await fetchRateLimit();
+    let rateLimitObject = await fetchRateLimit({ token });
 
     if (render) {
-      let markDown = await renderRateLimitTable(rateLimitObject);
+      let markDown = await renderRateLimitTable({ rateLimitObject });
       core.summary
         .addRaw(markDown)
         .write();
@@ -9897,13 +9907,13 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const { reporter } = __nccwpck_require__(3719);
 
+let token = core.getInput('access-token');
 let renderInput = core.getInput('render');
+
 let render = renderInput === 'true';
 
 // Run the Reporter action
-reporter({
-  render: render,
-}).then((result) => {
+reporter({ render, token }).then((result) => {
   core.debug(`reporter result:\n${result}`);
   core.setOutput('rateLimitObject', result);
 });
