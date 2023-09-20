@@ -1,6 +1,6 @@
 # GitHub Actions Rate-Limit Reporter
 
-This action reports the remaining rate-limit for the GitHub API.
+This action reports the remaining rate-limit for the GitHub API.  Running this action will provide output for consumed and remaining rate-limit for the GitHub token used to run the action.  This action is useful for debugging rate-limit issues with GitHub Actions or to use the rate-limit in subsequent steps, such as logging the rate-limit to an external service or waiting for the rate-limit to reset before continuing with the workflow.
 
 Accepts a GitHub token as input and `render` flag to render the output as step summary output.
 
