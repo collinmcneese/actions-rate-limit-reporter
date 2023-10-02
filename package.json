@@ -27,7 +27,7 @@
   "homepage": "https://github.com/collinmcneese/actions-rate-limit-reporter#readme",
   "devDependencies": {
     "@vercel/ncc": "^0.38.0",
-    "cspell": "^7.3.6",
+    "cspell": "^7.3.7",
     "eslint": "^8.50.0",
     "eslint-config-strongloop": "^2.1.0",
     "jest": "^29.7.0",
