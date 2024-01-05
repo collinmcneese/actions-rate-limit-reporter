@@ -6,7 +6,7 @@ Accepts a GitHub token as input and `render` flag to render the output as step s
 
 ## Inputs
 
-### `github-token`
+### `access-token`
 
 `String`, **Required** The GitHub token to use for authentication.
 
@@ -28,7 +28,7 @@ Example with rendering the output as step summary output:
 - name: Report rate-limit
   uses: collinmcneese/actions-rate-limit-reporter@main
   with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}
+    access-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Example using this Action in a step and then using the output in a subsequent step:
@@ -38,7 +38,7 @@ Example using this Action in a step and then using the output in a subsequent st
   id: report-rate-limit
   uses: collinmcneese/actions-rate-limit-reporter@main
   with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}
+    access-token: ${{ secrets.GITHUB_TOKEN }}
 - name: Do something with the rate-limit
   run: echo "The rate-limit remaining for core is ${{ fromJson(steps.report-rate-limit.outputs.rateLimitObject).resources.core.remaining }}"
 ```
