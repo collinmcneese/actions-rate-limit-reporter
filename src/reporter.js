@@ -13,7 +13,7 @@ async function fetchRateLimit({ token }) {
   try {
     const octokit = github.getOctokit(token);
 
-    let { data } = await octokit.rest.rateLimit.get();
+    const { data } = await octokit.rest.rateLimit.get();
 
     core.debug(`Rate limit data: ${JSON.stringify(data)}`);
 
@@ -36,10 +36,10 @@ async function renderRateLimitTable({ rateLimitObject }) {
     table += '| --- | --- | --- | --- |\n';
 
     // Create a row for each resource
-    for (let resource in rateLimitObject.resources) {
-      let rowLimit = rateLimitObject.resources[resource].limit;
-      let rowRemaining = rateLimitObject.resources[resource].remaining;
-      let rowReset = Date(rateLimitObject.resources[resource].reset);
+    for (const resource in rateLimitObject.resources) {
+      const rowLimit = rateLimitObject.resources[resource].limit;
+      const rowRemaining = rateLimitObject.resources[resource].remaining;
+      const rowReset = Date(rateLimitObject.resources[resource].reset);
 
       table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
     }
@@ -60,10 +60,10 @@ async function renderRateLimitTable({ rateLimitObject }) {
  */
 async function reporter({ render, token }) {
   try {
-    let rateLimitObject = await fetchRateLimit({ token });
+    const rateLimitObject = await fetchRateLimit({ token });
 
     if (render) {
-      let markDown = await renderRateLimitTable({ rateLimitObject });
+      const markDown = await renderRateLimitTable({ rateLimitObject });
       core.summary
         .addRaw(markDown)
         .write();
