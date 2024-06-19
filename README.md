@@ -8,11 +8,27 @@ Accepts a GitHub token as input and `render` flag to render the output as step s
 
 ### `access-token`
 
-`String`, **Required** The GitHub token to use for authentication.
+`String`, **Required**, The GitHub token to use for authentication.
 
 ### `render`
 
-`String`, **Optional** Render the output as step summary output.  Defaults to `'true'`.
+`String`, **Optional**, Render the output to the job's [step summary](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/).  Defaults to `'true'`.
+
+The `render` option will generate output similar to the following:
+
+| Resource | Limit | Remaining | Reset |
+| :-: | :-: | :-: | :-: | 
+| core | 5000 | 4815 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| search | 30 | 30 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| graphql | 5000 | 4980 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| integration_manifest | 5000 | 5000 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| source_import | 100 | 100 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| code_scanning_upload | 1000 | 998 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| actions_runner_registration | 10000 | 10000 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| scim | 15000 | 15000 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| dependency_snapshots | 100 | 100 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| audit_log | 1750 | 1750 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
+| code_search | 10 | 10 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
 
 ## Outputs
 
