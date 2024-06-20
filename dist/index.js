@@ -30528,11 +30528,11 @@ async function renderRateLimitTable({ rateLimitObject }) {
       const rowReset = Date(rateLimitObject.resources[resource].reset);
 
       if (rowRemaining < rowLimit * .25) {
-        rowRemaining = `<span style="color:red">${rowRemaining}</span>`;
+        rowRemaining = `<span style="color:red">:red_circle: ${rowRemaining}</span>`;
       } else if (rowRemaining < rowLimit * .5) {
-        rowRemaining = `<span style="color:orange">${rowRemaining}</span>`;
+        rowRemaining = `<span style="color:orange">:orange_circle: ${rowRemaining}</span>`;
       } else if (rowRemaining > rowLimit * .75) {
-        rowRemaining = `<span style="color:green">${rowRemaining}</span>`;
+        rowRemaining = `<span style="color:green">:green_circle: ${rowRemaining}</span>`;
       }
 
       table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
