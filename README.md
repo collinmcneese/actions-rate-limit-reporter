@@ -17,7 +17,7 @@ Accepts a GitHub token as input and `render` flag to render the output as step s
 The `render` option will generate output similar to the following:
 
 | Resource | Limit | Remaining | Reset |
-| :-: | :-: | :-: | :-: | 
+| :-: | :-: | :-: | :-: |
 | core | 5000 | 4815 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
 | search | 30 | 30 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |
 | graphql | 5000 | 4980 | Wed Jun 19 2024 16:26:02 GMT+0000 (Coordinated Universal Time) |

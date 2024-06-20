@@ -38,8 +38,16 @@ async function renderRateLimitTable({ rateLimitObject }) {
     // Create a row for each resource
     for (const resource in rateLimitObject.resources) {
       const rowLimit = rateLimitObject.resources[resource].limit;
-      const rowRemaining = rateLimitObject.resources[resource].remaining;
+      let rowRemaining = rateLimitObject.resources[resource].remaining;
       const rowReset = Date(rateLimitObject.resources[resource].reset);
+
+      if (rowRemaining < rowLimit * .25) {
+        rowRemaining = `<span style="color:red">${rowRemaining}</span>`;
+      } else if (rowRemaining < rowLimit * .5) {
+        rowRemaining = `<span style="color:orange">${rowRemaining}</span>`;
+      } else if (rowRemaining > rowLimit * .75) {
+        rowRemaining = `<span style="color:green">${rowRemaining}</span>`;
+      }
 
       table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |\n`;
     }

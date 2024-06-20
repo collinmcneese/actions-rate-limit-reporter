@@ -9,26 +9,55 @@ describe('renderRateLimitTable', () => {
   let rateLimitObject = {
     resources: {
       core: {
-        limit: 5000,
-        remaining: 4999,
+        limit: 1000,
+        remaining: 999,
         reset: 1609377600,
       },
       search: {
-        limit: 30,
-        remaining: 18,
+        limit: 1000,
+        remaining: 1,
+        reset: 1609377600,
+      },
+      graphql: {
+        limit: 1000,
+        remaining: 251,
+        reset: 1609377600,
+      },
+      code_search: {
+        limit: 1000,
+        remaining: 501,
         reset: 1609377600,
       },
     },
   };
 
   test('renderRateLimitTable', async () => {
-    // Test that the function returns a string
-    expect(typeof await renderRateLimitTable({ rateLimitObject })).toBe('string');
-    // Test that the function returns a string that includes the core resource
-    expect(await renderRateLimitTable({ rateLimitObject })).toMatch(/core/);
-    // Test that the function returns a string that includes the search resource
-    expect(await renderRateLimitTable({ rateLimitObject })).toMatch(/search/);
-    // Test that the function returns a string that has markdown table syntax
-    expect(await renderRateLimitTable({ rateLimitObject })).toMatch(/\|/);
+    const renderedTable = await renderRateLimitTable({ rateLimitObject });
+
+    // Check that the rendered table is a string
+    expect(typeof renderedTable)
+      .toBe('string');
+    // Check that the core resource is green (75-100% remaining)
+    expect(renderedTable)
+      .toMatch(/core.*green/);
+    // Check that the search resource is red (0-25% remaining)
+    expect(renderedTable)
+      .toMatch(/search.*red/);
+    // Check that the graphql resource is orange (25-50% remaining)
+    expect(renderedTable)
+      .toMatch(/graphql.*orange/);
+    // Check that the code_search resource has no color added (50-75% remaining)
+    expect(renderedTable)
+      .not.toMatch(/code_search.*span/);
+
+    // Check that the rendered table contains a Markdown table in the following format:
+    // | Resource | Limit | Remaining | Reset |
+    // | --- | --- | --- | --- |
+    expect(renderedTable)
+      .toMatch(/\| Resource \| Limit \| Remaining \| Reset \|/);
+    expect(renderedTable)
+      .toMatch(/\| --- \| --- \| --- \| --- \|/);
+
+    console.log(await renderRateLimitTable({ rateLimitObject }));
   });
 });
