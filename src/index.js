@@ -1,7 +1,7 @@
 // index.js
 
-const core = require('@actions/core');
-const { reporter } = require('./reporter');
+import core from '@actions/core';
+import { reporter } from './reporter.js';
 
 const token = core.getInput('access-token');
 const renderInput = core.getInput('render');
