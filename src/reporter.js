@@ -1,7 +1,7 @@
 // reporter.js
 
-const github = require('@actions/github');
-const core = require('@actions/core');
+import core from '@actions/core';
+import github from '@actions/github';
 
 /**
  * Fetch rate limit data from the GitHub API
@@ -89,7 +89,4 @@ const reporterPrivate = {
   renderRateLimitTable,
 };
 
-module.exports = {
-  reporterPrivate,
-  reporter,
-};
+export { reporter, reporterPrivate };
