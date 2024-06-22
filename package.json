@@ -5,7 +5,7 @@
   "exports": "./src/index.js",
   "scripts": {
     "test": "./__test__/ci.sh",
-    "build": "ncc build src/index.js --license licenses.txt"
+    "build": "npx esbuild src/index.js --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --target=node20.0.0"
   },
   "engines": {
     "npm": ">=8.0.0",
@@ -28,9 +28,9 @@
   "homepage": "https://github.com/collinmcneese/actions-rate-limit-reporter#readme",
   "devDependencies": {
     "@eslint/js": "^9.5.0",
-    "@vercel/ncc": "^0.38.1",
     "chai": "^5.1.1",
     "cspell": "^8.9.1",
+    "esbuild": "^0.21.5",
     "eslint": "^9.5.0",
     "markdownlint-cli": "^0.41.0",
     "mocha": "^10.4.0"

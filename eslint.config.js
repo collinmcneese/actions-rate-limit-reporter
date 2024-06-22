@@ -1,4 +1,3 @@
-// const js = require('@eslint/js');
 import js from "@eslint/js";
 
 export default [
