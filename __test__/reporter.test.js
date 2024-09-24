@@ -3,6 +3,7 @@
 import { expect } from 'chai';
 import * as reporter from '../src/reporter.js';
 const { renderRateLimitTable } = reporter.reporterPrivate;
+import fc from 'fast-check';
 
 // Test the renderRateLimitTable function
 describe('renderRateLimitTable', () => {
@@ -54,5 +55,49 @@ describe('renderRateLimitTable', () => {
 
     // Output the rendered table for debugging
     console.log(await renderRateLimitTable({ rateLimitObject }));
+  });
+
+  // fuzz test the renderRateLimitTable function
+  it('renderRateLimitTable with fuzz testing', async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.record({
+          resources: fc.record({
+            core: fc.record({
+              limit: fc.integer(0, 1000),
+              remaining: fc.integer(0, 1000),
+              reset: fc.integer(0, 1000),
+            }),
+            search: fc.record({
+              limit: fc.integer(0, 1000),
+              remaining: fc.integer(0, 1000),
+              reset: fc.integer(0, 1000),
+            }),
+            graphql: fc.record({
+              limit: fc.integer(0, 1000),
+              remaining: fc.integer(0, 1000),
+              reset: fc.integer(0, 1000),
+            }),
+            code_search: fc.record({
+              limit: fc.integer(0, 1000),
+              remaining: fc.integer(0, 1000),
+              reset: fc.integer(0, 1000),
+            }),
+          }),
+        }),
+        async (rateLimitObject) => {
+          const renderedTable = await renderRateLimitTable({ rateLimitObject });
+
+          // Check that the rendered table is a string
+          expect(renderedTable).to.be.a('string');
+
+          // Check that the rendered table contains a Markdown table in the following format:
+          // | Resource | Limit | Remaining | Reset |
+          // | --- | --- | --- | --- |
+          expect(renderedTable).to.match(/\| Resource \| Limit \| Remaining \| Reset \|/);
+          expect(renderedTable).to.match(/\| --- \| --- \| --- \| --- \|/);
+        }
+      )
+    );
   });
 });
