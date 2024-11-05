@@ -4,6 +4,7 @@
 *.sqlite
 local*
 node_modules
+dist/*.js
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos,windows,visualstudiocode,yarn
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,windows,visualstudiocode,yarn

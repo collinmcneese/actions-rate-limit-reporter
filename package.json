@@ -1,11 +1,11 @@
 {
   "name": "actions-rate-limit-reporter",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "GitHub Action used to report on current rate-limit data as part of an Actions workflow",
   "exports": "./src/index.js",
   "scripts": {
     "test": "./__test__/ci.sh",
-    "build": "npx esbuild src/index.js --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --target=node20.0.0"
+    "build": "npx tsc --noEmit && npx esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --target=node20.0.0"
   },
   "engines": {
     "npm": ">=8.0.0",
@@ -28,13 +28,17 @@
   "homepage": "https://github.com/collinmcneese/actions-rate-limit-reporter#readme",
   "devDependencies": {
     "@eslint/js": "^9.14.0",
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^22.9.0",
     "chai": "^5.1.2",
     "cspell": "^8.15.7",
     "esbuild": "^0.24.0",
     "eslint": "^9.14.0",
     "fast-check": "^3.23.1",
     "markdownlint-cli": "^0.42.0",
-    "mocha": "^10.8.2"
+    "mocha": "^10.8.2",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",

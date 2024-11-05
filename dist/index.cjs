@@ -1,3 +1,4 @@
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -379,7 +380,7 @@ var require_tunnel = __commonJS({
         connectOptions.headers = connectOptions.headers || {};
         connectOptions.headers["Proxy-Authorization"] = "Basic " + new Buffer(connectOptions.proxyAuth).toString("base64");
       }
-      debug("making CONNECT request");
+      debug3("making CONNECT request");
       var connectReq = self.request(connectOptions);
       connectReq.useChunkedEncodingByDefault = false;
       connectReq.once("response", onResponse);
@@ -399,7 +400,7 @@ var require_tunnel = __commonJS({
         connectReq.removeAllListeners();
         socket.removeAllListeners();
         if (res.statusCode !== 200) {
-          debug(
+          debug3(
             "tunneling socket could not be established, statusCode=%d",
             res.statusCode
           );
@@ -411,7 +412,7 @@ var require_tunnel = __commonJS({
           return;
         }
         if (head.length > 0) {
-          debug("got illegal response body from proxy");
+          debug3("got illegal response body from proxy");
           socket.destroy();
           var error = new Error("got illegal response body from proxy");
           error.code = "ECONNRESET";
@@ -419,13 +420,13 @@ var require_tunnel = __commonJS({
           self.removeSocket(placeholder);
           return;
         }
-        debug("tunneling connection has established");
+        debug3("tunneling connection has established");
         self.sockets[self.sockets.indexOf(placeholder)] = socket;
         return cb(socket);
       }
       function onError(cause) {
         connectReq.removeAllListeners();
-        debug(
+        debug3(
           "tunneling socket could not be established, cause=%s\n",
           cause.message,
           cause.stack
@@ -487,9 +488,9 @@ var require_tunnel = __commonJS({
       }
       return target;
     }
-    var debug;
+    var debug3;
     if (process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)) {
-      debug = function() {
+      debug3 = function() {
         var args = Array.prototype.slice.call(arguments);
         if (typeof args[0] === "string") {
           args[0] = "TUNNEL: " + args[0];
@@ -499,10 +500,10 @@ var require_tunnel = __commonJS({
         console.error.apply(console, args);
       };
     } else {
-      debug = function() {
+      debug3 = function() {
       };
     }
-    exports2.debug = debug;
+    exports2.debug = debug3;
   }
 });
 
@@ -19092,7 +19093,7 @@ var require_core = __commonJS({
       process.env["PATH"] = `${inputPath}${path.delimiter}${process.env["PATH"]}`;
     }
     exports2.addPath = addPath;
-    function getInput(name, options) {
+    function getInput2(name, options) {
       const val = process.env[`INPUT_${name.replace(/ /g, "_").toUpperCase()}`] || "";
       if (options && options.required && !val) {
         throw new Error(`Input required and not supplied: ${name}`);
@@ -19102,9 +19103,9 @@ var require_core = __commonJS({
       }
       return val.trim();
     }
-    exports2.getInput = getInput;
+    exports2.getInput = getInput2;
     function getMultilineInput(name, options) {
-      const inputs = getInput(name, options).split("\n").filter((x) => x !== "");
+      const inputs = getInput2(name, options).split("\n").filter((x) => x !== "");
       if (options && options.trimWhitespace === false) {
         return inputs;
       }
@@ -19114,7 +19115,7 @@ var require_core = __commonJS({
     function getBooleanInput(name, options) {
       const trueValue = ["true", "True", "TRUE"];
       const falseValue = ["false", "False", "FALSE"];
-      const val = getInput(name, options);
+      const val = getInput2(name, options);
       if (trueValue.includes(val))
         return true;
       if (falseValue.includes(val))
@@ -19123,7 +19124,7 @@ var require_core = __commonJS({
 Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
     exports2.getBooleanInput = getBooleanInput;
-    function setOutput(name, value) {
+    function setOutput2(name, value) {
       const filePath = process.env["GITHUB_OUTPUT"] || "";
       if (filePath) {
         return (0, file_command_1.issueFileCommand)("OUTPUT", (0, file_command_1.prepareKeyValueMessage)(name, value));
@@ -19131,24 +19132,24 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       process.stdout.write(os.EOL);
       (0, command_1.issueCommand)("set-output", { name }, (0, utils_1.toCommandValue)(value));
     }
-    exports2.setOutput = setOutput;
+    exports2.setOutput = setOutput2;
     function setCommandEcho(enabled) {
       (0, command_1.issue)("echo", enabled ? "on" : "off");
     }
     exports2.setCommandEcho = setCommandEcho;
-    function setFailed(message) {
+    function setFailed3(message) {
       process.exitCode = ExitCode.Failure;
       error(message);
     }
-    exports2.setFailed = setFailed;
+    exports2.setFailed = setFailed3;
     function isDebug() {
       return process.env["RUNNER_DEBUG"] === "1";
     }
     exports2.isDebug = isDebug;
-    function debug(message) {
+    function debug3(message) {
       (0, command_1.issueCommand)("debug", {}, message);
     }
-    exports2.debug = debug;
+    exports2.debug = debug3;
     function error(message, properties = {}) {
       (0, command_1.issueCommand)("error", (0, utils_1.toCommandProperties)(properties), message instanceof Error ? message.toString() : message);
     }
@@ -23129,28 +23130,33 @@ var require_github = __commonJS({
     var Context = __importStar(require_context());
     var utils_1 = require_utils4();
     exports2.context = new Context.Context();
-    function getOctokit(token2, options, ...additionalPlugins) {
+    function getOctokit2(token2, options, ...additionalPlugins) {
       const GitHubWithPlugins = utils_1.GitHub.plugin(...additionalPlugins);
       return new GitHubWithPlugins((0, utils_1.getOctokitOptions)(token2, options));
     }
-    exports2.getOctokit = getOctokit;
+    exports2.getOctokit = getOctokit2;
   }
 });
 
-// src/index.js
-var import_core2 = __toESM(require_core(), 1);
+// src/index.ts
+var core2 = __toESM(require_core(), 1);
 
-// src/reporter.js
-var import_core = __toESM(require_core(), 1);
-var import_github = __toESM(require_github(), 1);
+// src/reporter.ts
+var core = __toESM(require_core(), 1);
+var github = __toESM(require_github(), 1);
 async function fetchRateLimit({ token: token2 }) {
   try {
-    const octokit = import_github.default.getOctokit(token2);
+    const octokit = github.getOctokit(token2);
     const { data } = await octokit.rest.rateLimit.get();
-    import_core.default.debug(`Rate limit data: ${JSON.stringify(data)}`);
+    core.debug(`Rate limit data: ${JSON.stringify(data)}`);
     return data;
   } catch (error) {
-    import_core.default.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed(String(error));
+    }
+    throw error;
   }
 }
 async function renderRateLimitTable({ rateLimitObject }) {
@@ -23160,21 +23166,34 @@ async function renderRateLimitTable({ rateLimitObject }) {
     for (const resource in rateLimitObject.resources) {
       const rowLimit = rateLimitObject.resources[resource].limit;
       let rowRemaining = rateLimitObject.resources[resource].remaining;
-      const rowReset = Date(rateLimitObject.resources[resource].reset);
-      if (rowRemaining < rowLimit * 0.25) {
-        rowRemaining = `<span style="color:red">:red_circle: ${rowRemaining}</span>`;
-      } else if (rowRemaining < rowLimit * 0.5) {
-        rowRemaining = `<span style="color:orange">:orange_circle: ${rowRemaining}</span>`;
-      } else if (rowRemaining > rowLimit * 0.75) {
-        rowRemaining = `<span style="color:green">:green_circle: ${rowRemaining}</span>`;
+      let rowRemainingOutput;
+      const rowReset = new Date(rateLimitObject.resources[resource].reset * 1e3).toISOString();
+      switch (true) {
+        case rowRemaining < rowLimit * 0.25:
+          rowRemainingOutput = `<span style="color:red">:red_circle: ${rowRemaining}</span>`;
+          break;
+        case (rowRemaining < rowLimit * 0.5 && rowRemaining >= rowLimit * 0.25):
+          rowRemainingOutput = `<span style="color:orange">:orange_circle: ${rowRemaining}</span>`;
+          break;
+        case (rowRemaining < rowLimit * 0.75 && rowRemaining >= rowLimit * 0.5):
+          rowRemainingOutput = `<span style="color:yellow">:yellow_circle: ${rowRemaining}</span>`;
+          break;
+        case rowRemaining >= rowLimit * 0.75:
+          rowRemainingOutput = `<span style="color:green">:green_circle: ${rowRemaining}</span>`;
+          break;
       }
-      table += `| ${resource} | ${rowLimit} | ${rowRemaining} | ${rowReset} |
+      table += `| ${resource} | ${rowLimit} | ${rowRemainingOutput} | ${rowReset} |
 `;
     }
-    import_core.default.debug(`Rate limit table: ${table}`);
+    core.debug(`Rate limit table: ${table}`);
     return table;
   } catch (error) {
-    import_core.default.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed(String(error));
+    }
+    throw error;
   }
 }
 async function reporter({ render: render2, token: token2 }) {
@@ -23182,22 +23201,29 @@ async function reporter({ render: render2, token: token2 }) {
     const rateLimitObject = await fetchRateLimit({ token: token2 });
     if (render2) {
       const markDown = await renderRateLimitTable({ rateLimitObject });
-      import_core.default.summary.addRaw(markDown).write();
+      core.summary.addRaw(markDown).write();
     }
     return rateLimitObject;
   } catch (error) {
-    import_core.default.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed(String(error));
+    }
+    throw error;
   }
 }
 
-// src/index.js
-var token = import_core2.default.getInput("access-token");
-var renderInput = import_core2.default.getInput("render");
+// src/index.ts
+var token = core2.getInput("access-token");
+var renderInput = core2.getInput("render");
 var render = renderInput === "true";
 reporter({ render, token }).then((result) => {
-  import_core2.default.debug(`reporter result:
+  core2.debug(`reporter result:
 ${result}`);
-  import_core2.default.setOutput("rateLimitObject", result);
+  core2.setOutput("rateLimitObject", result);
+}).catch((error) => {
+  core2.setFailed(error.message);
 });
 /*! Bundled license information:
 

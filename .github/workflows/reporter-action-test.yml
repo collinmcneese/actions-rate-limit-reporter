@@ -2,6 +2,13 @@ name: reporter-action-test
 
 on:
   pull_request:
+    branches:
+      - main
+    paths:
+      - 'package*.json'
+      - '**/*.js'
+      - '**/*.ts'
+      - '.github/workflows/reporter-action-test.yml'
 
 permissions: {}
 
@@ -16,6 +23,7 @@ jobs:
         id: reporter-test-step
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
+          render: "true"
       - name: Get the output
         run: |
           echo 'rateLimitObject - The output was ${{ steps.reporter-test-step.outputs.rateLimitObject }}'
