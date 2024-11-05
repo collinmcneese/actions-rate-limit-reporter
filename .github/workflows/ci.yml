@@ -6,10 +6,10 @@
       branches:
       - main
       paths:
-        - './package*.json'
-        - './**/*.js'
-        - './**/*.ts'
-        - './.github/workflows/ci.yml'
+        - 'package*.json'
+        - '**/*.js'
+        - '**/*.ts'
+        - '.github/workflows/ci.yml'
 
   permissions: {}
 

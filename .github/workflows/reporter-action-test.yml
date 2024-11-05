@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - './package*.json'
-      - './**/*.js'
-      - './**/*.ts'
-      - './.github/workflows/reporter-action-test.yml'
+      - 'package*.json'
+      - '**/*.js'
+      - '**/*.ts'
+      - '.github/workflows/reporter-action-test.yml'
 
 permissions: {}
 
