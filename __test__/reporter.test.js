@@ -3,7 +3,7 @@ import * as reporter from '../dist/reporter.js';
 const { renderRateLimitTable } = reporter.reporterPrivate;
 import fc from 'fast-check';
 // Test the renderRateLimitTable function
-describe('renderRateLimitTable', () => {
+describe('renderRateLimitTable', async () => {
     const rateLimitObject = {
         resources: {
             core: {
@@ -28,11 +28,17 @@ describe('renderRateLimitTable', () => {
             },
         },
     };
+    const renderedTable = await renderRateLimitTable({ rateLimitObject });
     it('renderRateLimitTable', async () => {
-        const renderedTable = await renderRateLimitTable({ rateLimitObject });
         expect(renderedTable).to.be.a('string');
         expect(renderedTable).to.match(/\| Resource \| Limit \| Remaining \| Reset \|/);
         expect(renderedTable).to.match(/\| --- \| --- \| --- \| --- \|/);
+    });
+    it('should render the correct circle colors based on the remaining rate limit', async () => {
+        expect(renderedTable).to.match(/core.*color:green/)
+        expect(renderedTable).to.match(/search.*color:red/)
+        expect(renderedTable).to.match(/graphql.*color:orange/)
+        expect(renderedTable).to.match(/code_search.*color:yellow/)
     });
     it('renderRateLimitTable with fuzz testing', async () => {
         await fc.assert(fc.asyncProperty(fc.record({
@@ -59,7 +65,6 @@ describe('renderRateLimitTable', () => {
                 }),
             }),
         }), async (rateLimitObject) => {
-            const renderedTable = await renderRateLimitTable({ rateLimitObject });
             expect(renderedTable).to.be.a('string');
             expect(renderedTable).to.match(/\| Resource \| Limit \| Remaining \| Reset \|/);
             expect(renderedTable).to.match(/\| --- \| --- \| --- \| --- \|/);

@@ -23168,12 +23168,19 @@ async function renderRateLimitTable({ rateLimitObject }) {
       let rowRemaining = rateLimitObject.resources[resource].remaining;
       let rowRemainingOutput;
       const rowReset = new Date(rateLimitObject.resources[resource].reset * 1e3).toISOString();
-      if (rowRemaining < rowLimit * 0.25) {
-        rowRemainingOutput = `<span style="color:red">:red_circle: ${rowRemaining}</span>`;
-      } else if (rowRemaining < rowLimit * 0.5) {
-        rowRemainingOutput = `<span style="color:orange">:orange_circle: ${rowRemaining}</span>`;
-      } else if (rowRemaining > rowLimit * 0.75) {
-        rowRemainingOutput = `<span style="color:green">:green_circle: ${rowRemaining}</span>`;
+      switch (true) {
+        case rowRemaining < rowLimit * 0.25:
+          rowRemainingOutput = `<span style="color:red">:red_circle: ${rowRemaining}</span>`;
+          break;
+        case (rowRemaining < rowLimit * 0.5 && rowRemaining >= rowLimit * 0.25):
+          rowRemainingOutput = `<span style="color:orange">:orange_circle: ${rowRemaining}</span>`;
+          break;
+        case (rowRemaining < rowLimit * 0.75 && rowRemaining >= rowLimit * 0.5):
+          rowRemainingOutput = `<span style="color:yellow">:yellow_circle: ${rowRemaining}</span>`;
+          break;
+        case rowRemaining >= rowLimit * 0.75:
+          rowRemainingOutput = `<span style="color:green">:green_circle: ${rowRemaining}</span>`;
+          break;
       }
       table += `| ${resource} | ${rowLimit} | ${rowRemainingOutput} | ${rowReset} |
 `;
