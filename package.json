@@ -37,7 +37,7 @@
     "eslint": "^9.16.0",
     "fast-check": "^3.23.1",
     "markdownlint-cli": "^0.43.0",
-    "mocha": "^10.8.2",
+    "mocha": "^11.0.1",
     "typescript": "^5.7.2"
   },
   "dependencies": {
