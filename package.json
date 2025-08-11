@@ -27,18 +27,18 @@
   },
   "homepage": "https://github.com/collinmcneese/actions-rate-limit-reporter#readme",
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
+    "@eslint/js": "^9.33.0",
     "@types/chai": "^5.2.2",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.2.1",
     "chai": "^5.2.1",
     "cspell": "^9.2.0",
     "esbuild": "^0.25.8",
-    "eslint": "^9.32.0",
+    "eslint": "^9.33.0",
     "fast-check": "^4.2.0",
     "markdownlint-cli": "^0.45.0",
     "mocha": "^11.7.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
