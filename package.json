@@ -1,15 +1,15 @@
 {
   "name": "actions-rate-limit-reporter",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "GitHub Action used to report on current rate-limit data as part of an Actions workflow",
   "exports": "./src/index.js",
   "scripts": {
     "test": "./__test__/ci.sh",
-    "build": "npx tsc --noEmit && npx esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --target=node20.0.0"
+    "build": "npx tsc --noEmit && npx esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --target=node24.0.0"
   },
   "engines": {
     "npm": ">=8.0.0",
-    "node": ">=20.0.0"
+    "node": ">=24.0.0"
   },
   "type": "module",
   "repository": {
