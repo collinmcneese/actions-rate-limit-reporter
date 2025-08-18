@@ -16,5 +16,5 @@ outputs:
   rateLimitObject:
     description: 'The raw rate-limit object returned from the GitHub API.'
 runs:
-  using: 'node20'
+  using: node24
   main: 'dist/index.cjs'
