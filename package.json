@@ -1,6 +1,6 @@
 {
   "name": "actions-rate-limit-reporter",
-  "version": "4.0.2",
+  "version": "5.0.0",
   "description": "GitHub Action used to report on current rate-limit data as part of an Actions workflow",
   "exports": "./src/index.js",
   "scripts": {
