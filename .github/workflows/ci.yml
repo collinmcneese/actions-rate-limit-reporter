@@ -24,9 +24,9 @@
         matrix:
           node-version: [20.x, 22.x, 24.x]
       steps:
-        - uses: actions/checkout@v6
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v6
+          uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
           with:
             node-version: ${{ matrix.node-version }}
         - name: Install Dependencies
@@ -43,6 +43,6 @@
             fi
           id: diff
         - name: Generate artifact attestation
-          uses: actions/attest-build-provenance@v4
+          uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4
           with:
             subject-path: './dist'
