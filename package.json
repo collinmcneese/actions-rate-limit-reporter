@@ -30,14 +30,14 @@
     "@eslint/js": "^10.0.1",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.9.1",
     "chai": "^6.2.2",
     "cspell": "^10.0.0",
     "esbuild": "^0.28.0",
-    "eslint": "^10.2.1",
-    "fast-check": "^4.7.0",
+    "eslint": "^10.4.0",
+    "fast-check": "^4.8.0",
     "markdownlint-cli": "^0.48.0",
-    "mocha": "^11.7.5",
+    "mocha": "^11.7.6",
     "typescript": "^6.0.3"
   },
   "dependencies": {
