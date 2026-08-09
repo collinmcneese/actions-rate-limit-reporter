@@ -1,5 +1,5 @@
 ---
-  name: ci
+  name: CI
 
   on:
     pull_request:
@@ -7,6 +7,7 @@
       - main
       paths:
         - 'package*.json'
+        - '*.json'
         - '**/*.js'
         - '**/*.ts'
         - '.github/workflows/ci.yml'
@@ -22,7 +23,7 @@
         attestations: write
       strategy:
         matrix:
-          node-version: [20.x, 22.x, 24.x]
+          node-version: [24.x, 26.x]
       steps:
         - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         - name: Use Node.js ${{ matrix.node-version }}
